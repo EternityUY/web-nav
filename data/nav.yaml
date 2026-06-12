@@ -1,0 +1,91 @@
+categories:
+  - name: "常用"
+    icon: "star"
+    links:
+      - name: "GitHub"
+        url: "https://github.com"
+        icon: "github"
+        description: "代码托管与协作平台"
+        pinned: true
+      - name: "Gmail"
+        url: "https://mail.google.com"
+        icon: "mail"
+        description: "Google 邮箱"
+        pinned: true
+      - name: "Reddit"
+        url: "https://www.reddit.com"
+        icon: "message-circle"
+        description: "社区论坛"
+        pinned: false
+      - name: "Wikipedia"
+        url: "https://www.wikipedia.org"
+        icon: "book-open"
+        description: "自由百科全书"
+        pinned: false
+
+  - name: "开发工具"
+    icon: "wrench"
+    links:
+      - name: "Stack Overflow"
+        url: "https://stackoverflow.com"
+        icon: "layers"
+        description: "开发者问答社区"
+        pinned: true
+      - name: "npm"
+        url: "https://www.npmjs.com"
+        icon: "package"
+        description: "Node.js 包管理"
+        pinned: false
+      - name: "MDN Web Docs"
+        url: "https://developer.mozilla.org"
+        icon: "book"
+        description: "Web 技术文档"
+        pinned: false
+      - name: "Vercel"
+        url: "https://vercel.com"
+        icon: "triangle"
+        description: "前端部署平台"
+        pinned: true
+      - name: "Can I Use"
+        url: "https://caniuse.com"
+        icon: "check-circle"
+        description: "浏览器兼容性查询"
+        pinned: false
+
+  - name: "AI 工具"
+    icon: "sparkles"
+    links:
+      - name: "ChatGPT"
+        url: "https://chat.openai.com"
+        icon: "message-square"
+        description: "OpenAI 对话助手"
+        pinned: true
+      - name: "Claude"
+        url: "https://claude.ai"
+        icon: "bot"
+        description: "Anthropic AI 助手"
+        pinned: true
+      - name: "Hugging Face"
+        url: "https://huggingface.co"
+        icon: "cpu"
+        description: "AI 模型社区"
+        pinned: false
+
+  - name: "设计资源"
+    icon: "palette"
+    links:
+      - name: "Dribbble"
+        url: "https://dribbble.com"
+        icon: "figma"
+        description: "设计作品展示"
+        pinned: false
+      - name: "Unsplash"
+        url: "https://unsplash.com"
+        icon: "image"
+        description: "免费高清图库"
+        pinned: false
+      - name: "Coolors"
+        url: "https://coolors.co"
+        icon: "droplets"
+        description: "配色方案生成"
+        pinned: false

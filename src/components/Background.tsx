@@ -1,7 +1,9 @@
+import { Suspense, lazy } from 'react'
 import { useBackground } from '../hooks/useBackground'
 import { useNavStore } from '../stores/useNavStore'
 import { RefreshCw } from 'lucide-react'
-import NebulaBackground from './NebulaBackground'
+
+const ParticlePlanet = lazy(() => import('./ParticlePlanet'))
 
 interface BackgroundProps {
   onRefresh?: () => void
@@ -12,9 +14,15 @@ export default function Background({ onRefresh }: BackgroundProps) {
   const backgroundSource = useNavStore((s) => s.backgroundSource)
   const handleRefresh = onRefresh || refresh
 
-  // Dynamic nebula background
+  // Three.js 粒子星球（懒加载）
   if (backgroundSource === 'gradient') {
-    return <NebulaBackground />
+    return (
+      <Suspense fallback={
+        <div className="fixed inset-0 -z-10 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800" />
+      }>
+        <ParticlePlanet />
+      </Suspense>
+    )
   }
 
   return (

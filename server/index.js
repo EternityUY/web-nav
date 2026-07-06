@@ -48,27 +48,70 @@ app.get('/api/background', async (req, res) => {
   try {
     const idx = req.query.idx ?? 0
     const n = req.query.n ?? 8
-    const url = `https://cn.bing.com/HPImageArchive.aspx?format=js&idx=${idx}&n=${n}`
+    const url = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=${idx}&n=${n}&mkt=zh-CN`
     const resp = await fetch(url, {
-      headers: { 'User-Agent': 'Mozilla/5.0' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' },
     })
     if (!resp.ok) {
-      throw new Error(`Bing API returned ${resp.status}`)
+      // Fallback to cn.bing.com
+      const fallbackUrl = `https://cn.bing.com/HPImageArchive.aspx?format=js&idx=${idx}&n=${n}`
+      const fbResp = await fetch(fallbackUrl, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      })
+      if (!fbResp.ok) throw new Error(`Bing API returned ${resp.status} / ${fbResp.status}`)
+      var json = await fbResp.json()
+      var bingHost = 'https://cn.bing.com'
+    } else {
+      json = await resp.json()
+      bingHost = 'https://www.bing.com'
     }
-    const json = await resp.json()
 
     // Map to a simpler response: extract image URLs
     const images = (json.images || []).map((img) => ({
-      url: `https://cn.bing.com${img.url}`,
-      urlbase: `https://cn.bing.com${img.urlbase}`,
+      url: `${bingHost}${img.url}`,
+      urlbase: `${bingHost}${img.urlbase}`,
       copyright: img.copyright,
       title: img.title,
     }))
 
-    res.json({ success: true, images })
+    res.json({ success: true, images, host: bingHost })
   } catch (err) {
     console.error('Failed to fetch Bing background:', err)
     res.status(502).json({ success: false, error: 'Failed to fetch background image' })
+  }
+})
+
+// Proxy for individual Bing wallpaper images (bypasses hotlinking protection)
+app.get('/api/background/image', async (req, res) => {
+  try {
+    const imageUrl = req.query.url as string
+    if (!imageUrl) {
+      return res.status(400).json({ success: false, error: 'Missing url parameter' })
+    }
+    const resp = await fetch(imageUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'https://www.bing.com/',
+      },
+    })
+    if (!resp.ok) throw new Error(`Image proxy returned ${resp.status}`)
+    const contentType = resp.headers.get('content-type') || 'image/jpeg'
+    res.setHeader('Content-Type', contentType)
+    res.setHeader('Cache-Control', 'public, max-age=86400')
+    // Stream the image data to the client
+    const reader = resp.body?.getReader()
+    if (!reader) throw new Error('No response body')
+    const chunks: Uint8Array[] = []
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      chunks.push(value)
+    }
+    const buffer = Buffer.concat(chunks)
+    res.end(buffer)
+  } catch (err) {
+    console.error('Failed to proxy image:', err)
+    res.status(502).json({ success: false, error: 'Failed to proxy image' })
   }
 })
 

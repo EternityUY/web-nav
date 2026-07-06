@@ -14,7 +14,7 @@ export default function SearchBar() {
   const menuRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.google
+  const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.bing
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {

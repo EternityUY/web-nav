@@ -1,4 +1,5 @@
 import { useBackground } from '../hooks/useBackground'
+import { useNavStore } from '../stores/useNavStore'
 import { RefreshCw } from 'lucide-react'
 
 interface BackgroundProps {
@@ -6,7 +7,19 @@ interface BackgroundProps {
 }
 
 export default function Background({ onRefresh }: BackgroundProps) {
-  const { imageUrl, loading, copyright } = useBackground()
+  const { imageUrl, loading, copyright, refresh } = useBackground()
+  const backgroundSource = useNavStore((s) => s.backgroundSource)
+  const handleRefresh = onRefresh || refresh
+
+  // Gradient background
+  if (backgroundSource === 'gradient') {
+    return (
+      <div className="fixed inset-0 -z-10">
+        <div className="h-full w-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800" />
+        <div className="absolute inset-0 bg-black/35" />
+      </div>
+    )
+  }
 
   return (
     <div className="fixed inset-0 -z-10">
@@ -41,7 +54,7 @@ export default function Background({ onRefresh }: BackgroundProps) {
       </div>
       <div className="absolute bottom-4 right-4 z-10">
         <button
-          onClick={onRefresh}
+          onClick={handleRefresh}
           className="rounded-full bg-white/10 p-2 text-white/60 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white/90"
           title="刷新背景"
         >

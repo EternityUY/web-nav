@@ -8,6 +8,11 @@ interface BackgroundState {
   copyright: string | null
 }
 
+function buildProxyUrl(originalUrl: string): string {
+  // Use the server-side proxy to avoid Bing hotlinking protection
+  return `/api/background/image?url=${encodeURIComponent(originalUrl)}`
+}
+
 export function useBackground() {
   const [state, setState] = useState<BackgroundState>({
     imageUrl: null,
@@ -26,10 +31,12 @@ export function useBackground() {
         const images: BingImage[] = json.images
         setImagesCache(images)
         const random = images[Math.floor(Math.random() * images.length)]
-        // Use UHD quality
-        const uhd = random.url.replace('1920x1080', 'UHD')
+        // Use urlbase to construct UHD quality URL, then proxy it
+        const uhdUrl = random.urlbase
+          ? `${random.urlbase}_UHD.jpg`
+          : random.url
         setState({
-          imageUrl: uhd,
+          imageUrl: buildProxyUrl(uhdUrl),
           loading: false,
           error: null,
           copyright: random.copyright || null,
@@ -37,7 +44,8 @@ export function useBackground() {
       } else {
         setState((s) => ({ ...s, loading: false, error: 'No images returned' }))
       }
-    } catch {
+    } catch (err) {
+      console.error('Failed to fetch background:', err)
       setState((s) => ({ ...s, loading: false, error: 'Failed to load background' }))
     }
   }, [])

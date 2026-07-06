@@ -36,7 +36,7 @@ export const SEARCH_ENGINES: Record<string, SearchEngine> = {
 export function getSearchUrl(engine: string, query: string): string {
   const eng = SEARCH_ENGINES[engine]
   if (!eng) {
-    return `https://www.google.com/search?q=${encodeURIComponent(query)}`
+    return `https://www.bing.com/search?q=${encodeURIComponent(query)}`
   }
   return `${eng.url}${encodeURIComponent(query)}`
 }

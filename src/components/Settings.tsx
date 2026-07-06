@@ -4,7 +4,7 @@ import type { BackgroundSource } from '../types'
 
 const BACKGROUND_OPTIONS: { value: BackgroundSource; label: string; icon: typeof Image }[] = [
   { value: 'bing', label: 'Bing 每日壁纸', icon: Image },
-  { value: 'gradient', label: '渐变背景', icon: Palette },
+  { value: 'gradient', label: '动态星云', icon: Palette },
 ]
 
 export default function Settings() {

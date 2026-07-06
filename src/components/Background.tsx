@@ -1,6 +1,7 @@
 import { useBackground } from '../hooks/useBackground'
 import { useNavStore } from '../stores/useNavStore'
 import { RefreshCw } from 'lucide-react'
+import NebulaBackground from './NebulaBackground'
 
 interface BackgroundProps {
   onRefresh?: () => void
@@ -11,14 +12,9 @@ export default function Background({ onRefresh }: BackgroundProps) {
   const backgroundSource = useNavStore((s) => s.backgroundSource)
   const handleRefresh = onRefresh || refresh
 
-  // Gradient background
+  // Dynamic nebula background
   if (backgroundSource === 'gradient') {
-    return (
-      <div className="fixed inset-0 -z-10">
-        <div className="h-full w-full bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800" />
-        <div className="absolute inset-0 bg-black/35" />
-      </div>
-    )
+    return <NebulaBackground />
   }
 
   return (

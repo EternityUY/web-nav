@@ -1,0 +1,9 @@
+{
+  "server": {
+    "port": 3001
+  },
+  "app": {
+    "defaultBackground": "gradient",
+    "title": "Web Nav"
+  }
+}

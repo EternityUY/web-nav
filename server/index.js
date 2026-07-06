@@ -6,8 +6,20 @@ import yaml from 'js-yaml'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DATA_FILE = path.resolve(__dirname, '..', 'data', 'nav.yaml')
+const CONFIG_FILE = path.resolve(__dirname, '..', 'config', 'app.json')
 const DIST_DIR = path.resolve(__dirname, '..', 'dist')
-const PORT = process.env.PORT || 3001
+
+// Read config file (with fallback defaults)
+let appConfig = { server: { port: 3001 } }
+try {
+  if (fs.existsSync(CONFIG_FILE)) {
+    appConfig = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf-8'))
+  }
+} catch (err) {
+  console.warn('Failed to read config file, using defaults:', err)
+}
+
+const PORT = process.env.PORT || appConfig.server.port || 3001
 const isProd = process.env.NODE_ENV === 'production'
 
 const app = express()

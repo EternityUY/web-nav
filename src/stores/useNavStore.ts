@@ -35,7 +35,7 @@ export const useNavStore = create<NavStore>((set, get) => ({
   error: null,
   editing: false,
   darkMode: true,
-  backgroundSource: 'bing',
+  backgroundSource: 'gradient',
   searchEngine: 'bing',
   searchQuery: '',
   latitude: null,

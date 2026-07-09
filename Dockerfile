@@ -2,12 +2,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Explicitly set development mode so devDependencies (vite, typescript, etc.) are installed
-ENV NODE_ENV=development
-
-# Install build dependencies
+# Install ALL dependencies (including devDependencies like vite, TypeScript, Tailwind)
+# Note: using npm install instead of npm ci because GitHub Actions CI + BuildKit
+# can cause npm ci to skip devDependencies even when NODE_ENV=development
 COPY package.json package-lock.json* ./
-RUN npm ci
+RUN npm install
 
 # Build frontend (Vite → dist/)
 COPY tsconfig.json vite.config.ts tailwind.config.js postcss.config.js index.html ./

@@ -2,9 +2,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Upgrade npm to avoid npm 10.8.2 bug "Exit handler never called!" which breaks installs
+RUN npm install -g npm@latest
+
 # Install ALL dependencies (including devDependencies like vite, TypeScript, Tailwind)
-# Note: using npm install instead of npm ci because GitHub Actions CI + BuildKit
-# can cause npm ci to skip devDependencies even when NODE_ENV=development
 COPY package.json package-lock.json* ./
 RUN npm install
 
@@ -19,9 +20,12 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
+# Upgrade npm to avoid npm 10.8.2 bug
+RUN npm install -g npm@latest
+
 # Copy production dependencies only
 COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
 # Copy built frontend assets
 COPY --from=builder /app/dist ./dist

@@ -2,6 +2,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Explicitly set development mode so devDependencies (vite, typescript, etc.) are installed
+ENV NODE_ENV=development
+
 # Install build dependencies
 COPY package.json package-lock.json* ./
 RUN npm ci

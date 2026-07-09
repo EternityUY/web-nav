@@ -1,4 +1,4 @@
-import{r as Er,j as fl}from"./index-DcAOXv77.js";/**
+import{r as Er,j as fl}from"./index-N0sfJI06.js";/**
  * @license
  * Copyright 2010-2026 Three.js Authors
  * SPDX-License-Identifier: MIT
@@ -4135,7 +4135,7 @@ void main() {
 
     vec3 newPos = position + wobble;
 
-    // 颜色：根据位置混合 紫色(核心) → 金色(外缘)
+    // 颜色：根据位置混合 蓝白(核心) → 暖橙(外缘)
     // 不同方向不同缩放，使颜色梯度在盘面方向更明显
     float d = length(abs(newPos) / vec3(12.0, 4.0, 12.0));
     d = clamp(d, 0.0, 1.0);

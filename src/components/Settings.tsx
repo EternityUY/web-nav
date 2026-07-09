@@ -3,8 +3,8 @@ import { Sun, Moon, RefreshCw, Image, Palette } from 'lucide-react'
 import type { BackgroundSource } from '../types'
 
 const BACKGROUND_OPTIONS: { value: BackgroundSource; label: string; icon: typeof Image }[] = [
-  { value: 'gradient', label: '动态星云', icon: Palette },
   { value: 'bing', label: 'Bing 每日壁纸', icon: Image },
+  { value: 'planet', label: '动态星球', icon: Palette },
 ]
 
 export default function Settings() {

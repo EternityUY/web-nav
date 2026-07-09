@@ -23,7 +23,7 @@ export interface ApiResponse<T> {
 }
 
 // Background sources
-export type BackgroundSource = 'bing' | 'unsplash' | 'gradient'
+export type BackgroundSource = 'bing' | 'planet'
 
 export interface BingImage {
   url: string

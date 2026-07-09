@@ -3,7 +3,7 @@
     "port": 3001
   },
   "app": {
-    "defaultBackground": "gradient",
+    "defaultBackground": "bing",
     "title": "Web Nav"
   }
 }

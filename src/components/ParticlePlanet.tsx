@@ -25,14 +25,14 @@ const vertexShader = `
 
     vec3 newPos = position + wobble;
 
-    // 颜色：根据位置混合 紫色(核心) → 金色(外缘)
+    // 颜色：根据位置混合 蓝白(核心) → 暖橙(外缘)
     // 不同方向不同缩放，使颜色梯度在盘面方向更明显
     float d = length(abs(newPos) / vec3(12.0, 4.0, 12.0));
     d = clamp(d, 0.0, 1.0);
-    // 紫色 (100,50,255) → 金色 (227,155,0)
-    vec3 purple = vec3(0.392, 0.196, 1.0);
-    vec3 gold   = vec3(0.890, 0.608, 0.0);
-    vColor = mix(purple, gold, d);
+    // 蓝白 (160,195,255) → 暖橙 (255,140,50)
+    vec3 coreColor = vec3(0.627, 0.765, 1.0);
+    vec3 discColor = vec3(1.000, 0.549, 0.196);
+    vColor = mix(coreColor, discColor, d);
 
     // 边缘淡出 — 盘面外缘渐隐
     float dist = length(newPos);
@@ -55,7 +55,8 @@ const fragmentShader = `
     if (d > 0.5) discard;
 
     float strength = smoothstep(0.5, 0.2, d);
-    gl_FragColor = vec4(vColor, strength * vAlpha * 0.6 + 0.4);
+    float alpha = strength * vAlpha * 0.7 + 0.3;
+    gl_FragColor = vec4(vColor, alpha);
   }
 `
 
@@ -105,7 +106,7 @@ export default function ParticlePlanet() {
 
     // --- Scene ---
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x160016)
+    scene.background = new THREE.Color(0x050518)
 
     // --- Camera ---
     const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 2000)
@@ -201,9 +202,9 @@ export default function ParticlePlanet() {
 
     const starColors = new Float32Array(starCount * 3)
     for (let i = 0; i < starCount; i++) {
-      const tint = 0.6 + Math.random() * 0.4
-      starColors[i * 3] = tint
-      starColors[i * 3 + 1] = tint * 0.7
+      const tint = 0.5 + Math.random() * 0.5
+      starColors[i * 3] = tint * 0.9
+      starColors[i * 3 + 1] = tint * 0.85
       starColors[i * 3 + 2] = tint
     }
     starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3))

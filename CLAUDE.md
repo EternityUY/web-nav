@@ -15,11 +15,14 @@ npm start            # Production mode (Express serves API + static dist/)
 
 ### Web navigation start page (Bing-style)
 
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
+- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS (class dark mode)
 - **Backend**: Express.js API server (port 3001, proxied via Vite in dev)
 - **Data**: YAML file (`data/nav.yaml`) is the source of truth, read/written via REST API
+- **State**: Zustand single store — `fetchNav()` called in `App` on mount
+- **CI/CD**: GitHub Actions — pushes to `main` build Docker image and pushes to Docker Hub
+- **Docker**: Multi-stage build (`node:20-alpine`), production stage is ~100MB
 
-### Key files & structure
+### Project structure
 
 ```
 data/nav.yaml                          # Navigation data — edit directly or via web UI
@@ -33,7 +36,7 @@ src/
     useBackground.ts                   # Fetches Bing daily wallpaper via /api/background
     useWeather.ts                      # Fetches free Open-Meteo weather API
     useClock.ts                        # 1-second clock timer
-    useSearchEngines.ts                # (future) search engine config
+    useSearchEngines.ts                # Search engine config
   components/
     Background.tsx                     # Full-screen Bing wallpaper with overlay
     SearchBar.tsx                      # Centered search with engine switcher
@@ -45,7 +48,7 @@ src/
     Settings.tsx                       # Theme/background source controls
     Editor/
       EditorPanel.tsx                  # Side drawer — link & category management
-      CategoryEditor.tsx               # Add/edit/delete categories
+      CategoryEditor.tsx               # Add/edit/delete categories (name, icon)
       LinkEditor.tsx                   # Add/edit/delete links (icon, name, url, pin)
   utils/
     search.ts                          # Search engine URL definitions
@@ -74,15 +77,31 @@ categories:
         pinned: true
 ```
 
-### Key patterns
+## Coding conventions
 
-- **State management**: Zustand single store. `fetchNav()` called in `App` on mount.
-- **Editing**: Editor panel modifies a draft copy (deep-cloned). Save → PUT /api/nav → YAML file.
-- **Background**: Bing wallpaper API returns 8 images → random one selected → `background-size: cover`.
-- **Search**: Engine selector dropdown. Press `/` to focus search. Engine URLs defined in `utils/search.ts`.
-- **Weather**: Free Open-Meteo API via browser geolocation. Falls back to Beijing coordinates.
-- **Theme**: Dark mode by default. `.dark` class on `<html>` toggled via Tailwind.
+### TypeScript / React
 
-### Available icon names (for YAML)
+- **TypeScript**: Strict mode enabled in `tsconfig.json`. Avoid `any` — use proper types from `types/index.ts`.
+- **Imports**: Use named exports. React components are PascalCase, utility functions are camelCase.
+- **Hooks**: Custom hooks in `src/hooks/` follow `useXxx` naming, return typed objects.
+- **Components**: Functional components only. Props typed with interface exported from the component file or `types/index.ts`.
+- **State**: Use Zustand store (`useNavStore`) for global state. Local UI state stays in `useState`/`useReducer`.
+- **Styling**: Tailwind utility classes. Dark mode via `dark:` prefix. No CSS modules or styled-components.
+- **Icons**: Use lucide-react components. Icon name → component mapping in `utils/icons.tsx`.
+- **Editor pattern**: Editor modifies a deep-cloned draft. Save → PUT /api/nav → YAML file written server-side.
+
+### Git conventions
+
+- **Commit**: Chinese or English messages, imperative mood, e.g. `feat: add link pin/unpin`, `fix: correct Bing wallpaper URL`
+- **Branch**: `feat/xxx`, `fix/xxx`, `chore/xxx`
+- **No linter**: ESLint / Prettier not configured — maintain consistent formatting manually
+
+### Environment
+
+- **Node**: >=18, uses `node:20-alpine` in Docker
+- **npm**: Uses `package-lock.json` for reproducible installs
+- **Ports**: 5173 (Vite dev), 3001 (Express for both dev and prod)
+
+### Available icon names (for YAML data)
 
 star, github, mail, message-circle, book-open, layers, package, book, triangle, check-circle, message-square, bot, cpu, figma, image, droplets, wrench, sparkles, palette, globe, code, terminal, server, database, shield, zap, link, search, home, user, settings, clock, cloud, folder, heart, music, video, camera, map, list, filter

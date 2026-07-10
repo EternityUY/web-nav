@@ -113,7 +113,7 @@ app.get('/api/background/image', async (req, res) => {
     // Stream the image data to the client
     const reader = resp.body?.getReader()
     if (!reader) throw new Error('No response body')
-    const chunks: Uint8Array[] = []
+    const chunks = []
     while (true) {
       const { done, value } = await reader.read()
       if (done) break

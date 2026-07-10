@@ -47,15 +47,6 @@ export default function SearchBar() {
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
-      {/* Inline SVG filter for liquid glass displacement */}
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs>
-          <filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
-            <feDisplacementMap scale="50" in="SourceGraphic" in2="SourceGraphic" />
-          </filter>
-        </defs>
-      </svg>
-
       <form onSubmit={handleSubmit}>
         <div
           className={`

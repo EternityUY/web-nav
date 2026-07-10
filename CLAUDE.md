@@ -19,10 +19,11 @@ git push
 ## Commands
 
 ```bash
-npm install          # Install dependencies
-npm run dev          # Dev mode (Vite HMR + Express API concurrently)
+npm install                  # Install frontend dependencies
+pip install -r server/requirements.txt  # Install Python backend dependencies
+npm run dev          # Dev mode (Vite HMR + Flask API concurrently)
 npm run build        # Build frontend to dist/
-npm start            # Production mode (Express serves API + static dist/)
+npm start            # Production mode (Flask serves API + static dist/)
 ```
 
 ## Architecture
@@ -30,17 +31,17 @@ npm start            # Production mode (Express serves API + static dist/)
 ### Web navigation start page (Bing-style)
 
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS (class dark mode)
-- **Backend**: Express.js API server (port 3001, proxied via Vite in dev)
+- **Backend**: Flask (Python) API server (port 3001, proxied via Vite in dev)
 - **Data**: YAML file (`data/nav.yaml`) is the source of truth, read/written via REST API
 - **State**: Zustand single store — `fetchNav()` called in `App` on mount
 - **CI/CD**: GitHub Actions — pushes to `main` build Docker image and pushes to Docker Hub
-- **Docker**: Multi-stage build (`node:20-alpine`), production stage is ~100MB
+- **Docker**: `python:3.12-alpine`, production image is ~80MB
 
 ### Project structure
 
 ```
 data/nav.yaml                          # Navigation data — edit directly or via web UI
-server/index.js                        # Express: GET/PUT /api/nav, GET /api/background proxy
+server/index.py                        # Flask: GET/PUT /api/nav, GET /api/background proxy
 src/
   App.tsx                              # Root layout: background → clock → search → nav grid
   main.tsx                             # Entry point
@@ -72,7 +73,7 @@ src/
 ### Data flow
 
 ```
-data/nav.yaml  ←→  Express API (/api/nav)  ←→  Zustand Store  →  React Components
+data/nav.yaml  ←→  Flask API (/api/nav)  ←→  Zustand Store  →  React Components
                        ↑                              ↓
               Background proxy (/api/background)   Editor Panel
 ```
@@ -112,9 +113,10 @@ categories:
 
 ### Environment
 
-- **Node**: >=18, uses `node:20-alpine` in Docker
+- **Node**: >=18 (frontend dev/build only)
+- **Python**: >=3.12 (backend, uses `python:3.12-alpine` in Docker)
 - **npm**: Uses `package-lock.json` for reproducible installs
-- **Ports**: 5173 (Vite dev), 3001 (Express for both dev and prod)
+- **Ports**: 5173 (Vite dev), 3001 (Flask for both dev and prod)
 
 ### Available icon names (for YAML data)
 

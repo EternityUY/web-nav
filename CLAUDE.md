@@ -2,6 +2,20 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ 构建规则（必读）
+
+**每次修改前端代码后必须运行 `npm run build`，并将 `dist/` 目录一起提交。**
+
+Docker 镜像直接使用 `dist/` 成品，不执行构建。修改 `src/` 下的代码但不更新 `dist/` = Docker 跑的仍是旧版本。
+
+```bash
+# 标准工作流：改代码 → 构建 → 提交（含 dist/）
+npm run build
+git add dist/
+git commit -m "..."
+git push
+```
+
 ## Commands
 
 ```bash

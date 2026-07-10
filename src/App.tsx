@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useNavStore } from './stores/useNavStore'
 import Background from './components/Background'
 import SearchBar from './components/SearchBar'
@@ -12,6 +12,12 @@ import LiquidGlass from '@skyline23/liquid-glass-react'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
+
+  // Edit button only visible when URL has ?set=true
+  const showEdit = useMemo(() => {
+    const params = new URLSearchParams(window.location.search)
+    return params.get('set') === 'true'
+  }, [])
 
   useEffect(() => {
     fetchNav()
@@ -34,22 +40,24 @@ export default function App() {
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <LiquidGlass
-              cornerRadius={100}
-              displacementScale={60}
-              blurAmount={0.08}
-              saturation={130}
-              aberrationIntensity={2}
-              elasticity={0.25}
-              padding="8px"
-              overLight={!darkMode}
-              onClick={() => setEditing(true)}
-              style={{ display: 'inline-flex', cursor: 'pointer' }}
-            >
-              <span className="flex items-center justify-center" title="编辑导航">
-                <Edit3 size={16} color={darkMode ? 'rgba(255,255,255,0.65)' : 'rgba(80,80,80,0.7)'} />
-              </span>
-            </LiquidGlass>
+            {showEdit && (
+              <LiquidGlass
+                cornerRadius={100}
+                displacementScale={60}
+                blurAmount={0.08}
+                saturation={130}
+                aberrationIntensity={2}
+                elasticity={0.25}
+                padding="8px"
+                overLight={!darkMode}
+                onClick={() => setEditing(true)}
+                style={{ display: 'inline-flex', cursor: 'pointer' }}
+              >
+                <span className="flex items-center justify-center" title="编辑导航">
+                  <Edit3 size={16} color={darkMode ? 'rgba(255,255,255,0.65)' : 'rgba(80,80,80,0.7)'} />
+                </span>
+              </LiquidGlass>
+            )}
           </div>
         </div>
 

@@ -96,7 +96,7 @@ app.get('/api/background', async (req, res) => {
 // Proxy for individual Bing wallpaper images (bypasses hotlinking protection)
 app.get('/api/background/image', async (req, res) => {
   try {
-    const imageUrl = req.query.url as string
+    const imageUrl = req.query.url
     if (!imageUrl) {
       return res.status(400).json({ success: false, error: 'Missing url parameter' })
     }

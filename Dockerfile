@@ -5,6 +5,9 @@ WORKDIR /app
 # 只安装服务端运行时必需的包（express + js-yaml），前端依赖已打包进 dist/
 RUN npm install express js-yaml
 
+# 覆盖 npm 自动生成的 package.json，提供 "type": "module" 确保 Node.js 正确解析 ESM
+COPY package.json ./
+
 # 复制构建产物和服务端代码
 COPY dist/ dist/
 COPY server/ server/

@@ -2,7 +2,7 @@ import express from 'express'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import yaml from 'js-yaml'
+import { load as yamlLoad, dump as yamlDump } from 'js-yaml'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const DATA_FILE = path.resolve(__dirname, '..', 'data', 'nav.yaml')
@@ -30,7 +30,7 @@ app.use(express.json({ limit: '1mb' }))
 app.get('/api/nav', (req, res) => {
   try {
     const raw = fs.readFileSync(DATA_FILE, 'utf-8')
-    const data = yaml.load(raw)
+    const data = yamlLoad(raw)
     res.json({ success: true, data })
   } catch (err) {
     console.error('Failed to read YAML:', err)
@@ -44,7 +44,7 @@ app.put('/api/nav', (req, res) => {
     if (!data || !data.categories) {
       return res.status(400).json({ success: false, error: 'Invalid data: missing categories' })
     }
-    const raw = yaml.dump(data, { indent: 2, lineWidth: -1, noRefs: true })
+    const raw = yamlDump(data, { indent: 2, lineWidth: -1, noRefs: true })
     fs.writeFileSync(DATA_FILE, raw, 'utf-8')
     res.json({ success: true })
   } catch (err) {

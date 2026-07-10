@@ -22,8 +22,6 @@ export interface ApiResponse<T> {
   error?: string
 }
 
-// Background sources
-export type BackgroundSource = 'bing' | 'planet'
 
 export interface BingImage {
   url: string

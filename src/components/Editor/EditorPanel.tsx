@@ -75,26 +75,26 @@ export default function EditorPanel() {
       />
 
       {/* Panel */}
-      <div className="relative ml-auto w-full max-w-lg h-full bg-zinc-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl flex flex-col">
+      <div className="relative ml-auto w-full max-w-lg h-full dark:bg-zinc-900/95 dark:border-white/10 bg-white/90 border-l border-gray-200 glass-dropdown shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-          <h2 className="text-base font-semibold text-white/90">编辑导航</h2>
+        <div className="flex items-center justify-between px-5 py-4 border-b dark:border-white/10 border-gray-200">
+          <h2 className="text-base font-semibold dark:text-white/90 text-gray-800">编辑导航</h2>
           <button
             onClick={() => setEditing(false)}
-            className="rounded-lg p-1.5 text-white/40 hover:text-white/80 hover:bg-white/10 transition-colors"
+            className="rounded-lg p-1.5 dark:text-white/40 dark:hover:text-white/80 dark:hover:bg-white/10 text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-white/10 px-5">
+        <div className="flex border-b dark:border-white/10 border-gray-200 px-5">
           <button
             onClick={() => setTab('links')}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               tab === 'links'
-                ? 'border-blue-400 text-white'
-                : 'border-transparent text-white/40 hover:text-white/60'
+                ? 'dark:border-blue-400 dark:text-white border-blue-500 text-blue-600'
+                : 'dark:border-transparent dark:text-white/40 dark:hover:text-white/60 border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             链接
@@ -103,8 +103,8 @@ export default function EditorPanel() {
             onClick={() => setTab('categories')}
             className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
               tab === 'categories'
-                ? 'border-blue-400 text-white'
-                : 'border-transparent text-white/40 hover:text-white/60'
+                ? 'dark:border-blue-400 dark:text-white border-blue-500 text-blue-600'
+                : 'dark:border-transparent dark:text-white/40 dark:hover:text-white/60 border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >
             分类
@@ -125,8 +125,8 @@ export default function EditorPanel() {
           <div
             className={`mx-5 mb-2 px-3 py-2 rounded-lg text-sm flex items-center gap-2 ${
               message.type === 'success'
-                ? 'bg-green-500/10 text-green-400'
-                : 'bg-red-500/10 text-red-400'
+                ? 'dark:bg-green-500/10 dark:text-green-400 bg-green-50 text-green-600'
+                : 'dark:bg-red-500/10 dark:text-red-400 bg-red-50 text-red-600'
             }`}
           >
             {message.type === 'success' ? <CheckCircle2 size={14} /> : <AlertCircle size={14} />}
@@ -135,17 +135,17 @@ export default function EditorPanel() {
         )}
 
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-white/10 flex items-center gap-2">
+        <div className="px-5 py-4 border-t dark:border-white/10 border-gray-200 flex items-center gap-2">
           <button
             onClick={handleImport}
-            className="px-3 py-2 rounded-lg text-xs text-white/50 hover:text-white/70 bg-white/5 hover:bg-white/10 transition-colors"
+            className="px-3 py-2 rounded-lg text-xs dark:text-white/50 dark:hover:text-white/70 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
             title="导入 JSON 备份"
           >
             <FileUp size={14} />
           </button>
           <button
             onClick={handleExport}
-            className="px-3 py-2 rounded-lg text-xs text-white/50 hover:text-white/70 bg-white/5 hover:bg-white/10 transition-colors"
+            className="px-3 py-2 rounded-lg text-xs dark:text-white/50 dark:hover:text-white/70 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
             title="导出 JSON 备份"
           >
             <FileDown size={14} />
@@ -155,7 +155,7 @@ export default function EditorPanel() {
 
           <button
             onClick={() => setDraft(JSON.parse(JSON.stringify(navData)))}
-            className="px-4 py-2 rounded-lg text-xs text-white/50 hover:text-white/70 bg-white/5 hover:bg-white/10 transition-colors flex items-center gap-1.5"
+            className="px-4 py-2 rounded-lg text-xs dark:text-white/50 dark:hover:text-white/70 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors flex items-center gap-1.5"
           >
             <Undo2 size={14} />
             重置

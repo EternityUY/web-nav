@@ -22,7 +22,7 @@ export default function App() {
   }, [darkMode])
 
   return (
-    <div className={`relative h-full w-full overflow-y-auto ${darkMode ? 'dark' : ''}`}>
+    <div className="relative h-full w-full overflow-y-auto">
       {/* Background layer */}
       <Background />
 
@@ -35,7 +35,7 @@ export default function App() {
             <Settings />
             <button
               onClick={() => setEditing(true)}
-              className="rounded-full bg-white/10 p-2 text-white/60 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white/90"
+              className="rounded-full dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20 dark:hover:text-white/90 bg-white/70 text-gray-600 border border-gray-200/50 p-2 backdrop-blur-sm transition-all hover:bg-gray-100 hover:text-gray-800"
               title="编辑导航"
             >
               <Edit3 size={16} />

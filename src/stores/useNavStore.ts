@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { NavData, BackgroundSource } from '../types'
+import type { NavData } from '../types'
 
 interface NavStore {
   // Navigation data
@@ -10,7 +10,6 @@ interface NavStore {
   // UI state
   editing: boolean
   darkMode: boolean
-  backgroundSource: BackgroundSource
   searchEngine: string
   searchQuery: string
 
@@ -23,7 +22,6 @@ interface NavStore {
   saveNav: (data: NavData) => Promise<boolean>
   setEditing: (editing: boolean) => void
   toggleDarkMode: () => void
-  setBackgroundSource: (source: BackgroundSource) => void
   setSearchEngine: (engine: string) => void
   setSearchQuery: (query: string) => void
   setLocation: (lat: number, lng: number) => void
@@ -35,7 +33,6 @@ export const useNavStore = create<NavStore>((set, get) => ({
   error: null,
   editing: false,
   darkMode: true,
-  backgroundSource: 'bing',
   searchEngine: 'bing',
   searchQuery: '',
   latitude: null,
@@ -76,7 +73,6 @@ export const useNavStore = create<NavStore>((set, get) => ({
 
   setEditing: (editing) => set({ editing }),
   toggleDarkMode: () => set((s) => ({ darkMode: !s.darkMode })),
-  setBackgroundSource: (source) => set({ backgroundSource: source }),
   setSearchEngine: (engine) => set({ searchEngine: engine }),
   setSearchQuery: (query) => set({ searchQuery: query }),
   setLocation: (lat, lng) => set({ latitude: lat, longitude: lng }),

@@ -24,11 +24,11 @@ export default function CategorySection({ category, searchQuery = '' }: Category
     <section className="mb-6">
       {/* Category header */}
       <div className="flex items-center gap-2 mb-3 px-1">
-        <span className="text-white/50">{getIcon(category.icon, 16)}</span>
-        <h2 className="text-sm font-medium text-white/60 tracking-wide uppercase">
+        <span className="dark:text-white/50 text-gray-400">{getIcon(category.icon, 16)}</span>
+        <h2 className="text-sm font-medium dark:text-white/60 text-gray-500 tracking-wide uppercase">
           {category.name}
         </h2>
-        <span className="text-xs text-white/30 ml-auto">
+        <span className="text-xs dark:text-white/30 text-gray-400 ml-auto">
           {filtered.length}
         </span>
       </div>

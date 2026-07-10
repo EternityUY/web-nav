@@ -50,15 +50,15 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-white/70">链接管理</h3>
+      <h3 className="text-sm font-medium dark:text-white/70 text-gray-700">链接管理</h3>
 
       {data.categories.map((cat, ci) => (
-        <div key={ci} className="rounded-lg bg-white/[0.04] border border-white/[0.06] p-3">
+        <div key={ci} className="rounded-lg dark:bg-white/[0.04] dark:border-white/[0.06] bg-gray-50/50 border border-gray-100 p-3">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-medium text-white/50 uppercase">{cat.name}</h4>
+            <h4 className="text-xs font-medium dark:text-white/50 text-gray-500 uppercase">{cat.name}</h4>
             <button
               onClick={() => addLink(ci)}
-              className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-1 text-xs dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500 transition-colors"
             >
               <Plus size={12} />
               添加链接
@@ -69,7 +69,7 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
             {cat.links.map((link, li) => (
               <div
                 key={li}
-                className="flex items-start gap-2 rounded-lg bg-white/[0.04] p-2 border border-white/[0.04]"
+                className="flex items-start gap-2 rounded-lg dark:bg-white/[0.04] dark:border-white/[0.04] bg-gray-50 border border-gray-100 p-2"
               >
                 <div className="flex-1 min-w-0 space-y-1.5">
                   {/* Row 1: Name + URL */}
@@ -78,14 +78,14 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
                       type="text"
                       value={link.name}
                       onChange={(e) => updateLink(ci, li, 'name', e.target.value)}
-                      className="flex-1 bg-white/10 text-sm text-white/90 outline-none rounded px-2 py-1 border border-white/10 focus:border-blue-400/50 transition-colors"
+                      className="flex-1 dark:bg-white/10 dark:text-white/90 bg-gray-100 text-gray-800 text-sm outline-none rounded px-2 py-1 border dark:border-white/10 border-gray-200 focus:border-blue-400/50 transition-colors"
                       placeholder="名称"
                     />
                     <input
                       type="text"
                       value={link.url}
                       onChange={(e) => updateLink(ci, li, 'url', e.target.value)}
-                      className="flex-[2] bg-white/10 text-sm text-white/70 outline-none rounded px-2 py-1 border border-white/10 focus:border-blue-400/50 transition-colors font-mono"
+                      className="flex-[2] dark:bg-white/10 dark:text-white/70 bg-gray-100 text-gray-600 text-sm outline-none rounded px-2 py-1 border dark:border-white/10 border-gray-200 focus:border-blue-400/50 transition-colors font-mono"
                       placeholder="https://..."
                     />
                   </div>
@@ -95,7 +95,7 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
                     <select
                       value={link.icon}
                       onChange={(e) => updateLink(ci, li, 'icon', e.target.value)}
-                      className="bg-white/10 text-white/60 text-xs rounded px-2 py-1 border border-white/10 outline-none focus:border-white/30"
+                      className="dark:bg-white/10 dark:text-white/60 bg-gray-100 text-gray-600 text-xs rounded px-2 py-1 border dark:border-white/10 border-gray-200 outline-none focus:border-gray-400 dark:focus:border-white/30 transition-colors"
                     >
                       {ICON_OPTIONS.map((opt) => (
                         <option key={opt} value={opt}>
@@ -107,7 +107,7 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
                       type="text"
                       value={link.description || ''}
                       onChange={(e) => updateLink(ci, li, 'description', e.target.value)}
-                      className="flex-1 bg-white/10 text-xs text-white/60 outline-none rounded px-2 py-1 border border-white/10 focus:border-white/30 transition-colors"
+                      className="flex-1 dark:bg-white/10 dark:text-white/60 bg-gray-100 text-gray-600 text-xs outline-none rounded px-2 py-1 border dark:border-white/10 border-gray-200 focus:border-gray-400 dark:focus:border-white/30 transition-colors"
                       placeholder="描述（可选）"
                     />
 
@@ -117,7 +117,7 @@ export default function LinkEditor({ data, onChange }: LinkEditorProps) {
                       className={`p-1 rounded transition-colors ${
                         link.pinned
                           ? 'text-yellow-400 bg-yellow-400/10'
-                          : 'text-white/30 hover:text-white/60'
+                          : 'dark:text-white/30 dark:hover:text-white/60 text-gray-400 hover:text-gray-600'
                       }`}
                       title={link.pinned ? '取消固定' : '固定'}
                     >

@@ -51,9 +51,11 @@ export default function SearchBar() {
         <div
           className={`
             relative flex items-center rounded-full border transition-all duration-300
+            dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15
+            border-gray-200 glass-input hover:bg-white/70
             ${focused
-              ? 'border-white/40 bg-white/15 shadow-lg shadow-black/20 scale-105'
-              : 'border-white/20 bg-white/10 hover:bg-white/15'
+              ? 'dark:border-white/40 dark:bg-white/15 dark:shadow-lg dark:shadow-black/20 border-gray-300 bg-white/85 shadow-lg shadow-gray-200/50 scale-105'
+              : ''
             }
           `}
         >
@@ -62,14 +64,14 @@ export default function SearchBar() {
             <button
               type="button"
               onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-1.5 pl-5 pr-2 py-3 text-white/80 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 pl-5 pr-2 py-3 dark:text-white/80 dark:hover:text-white text-gray-600 hover:text-gray-800 transition-colors"
             >
               <span className="text-sm font-medium whitespace-nowrap">{currentEngine.name}</span>
               <ChevronDown size={14} className={`transition-transform ${showMenu ? 'rotate-180' : ''}`} />
             </button>
 
             {showMenu && (
-              <div className="absolute top-full left-3 mt-1 w-40 rounded-xl bg-black/70 backdrop-blur-xl border border-white/10 py-1 shadow-xl z-50">
+              <div className="absolute top-full left-3 mt-1 w-40 rounded-xl glass-dropdown py-1 z-50">
                 {ENGINES.map(([key, eng]) => (
                   <button
                     key={key}
@@ -81,8 +83,8 @@ export default function SearchBar() {
                     }}
                     className={`w-full text-left px-4 py-2 text-sm transition-colors ${
                       searchEngine === key
-                        ? 'text-white bg-white/10'
-                        : 'text-white/60 hover:text-white hover:bg-white/5'
+                        ? 'dark:text-white dark:bg-white/10 text-gray-800 bg-gray-100'
+                        : 'dark:text-white/60 dark:hover:text-white dark:hover:bg-white/5 text-gray-500 hover:text-gray-800 hover:bg-gray-50'
                     }`}
                   >
                     {eng.name}
@@ -101,14 +103,14 @@ export default function SearchBar() {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             placeholder="搜索或输入网址..."
-            className="flex-1 bg-transparent px-3 py-3 text-white placeholder-white/40 outline-none text-base"
+            className="flex-1 bg-transparent px-3 py-3 dark:text-white dark:placeholder-white/40 text-gray-800 placeholder-gray-400 outline-none text-base"
             autoComplete="off"
           />
 
           {/* Submit button */}
           <button
             type="submit"
-            className="pr-5 pl-2 py-3 text-white/70 hover:text-white transition-colors"
+            className="pr-5 pl-2 py-3 dark:text-white/70 dark:hover:text-white text-gray-500 hover:text-gray-800 transition-colors"
           >
             <Search size={20} />
           </button>
@@ -116,8 +118,8 @@ export default function SearchBar() {
       </form>
 
       {/* Search engine hint */}
-      <p className="text-center text-xs text-white/30 mt-2">
-        按 <kbd className="rounded bg-white/10 px-1.5 py-0.5 text-white/50">/</kbd> 快速搜索
+      <p className="text-center text-xs dark:text-white/30 text-gray-400 mt-2">
+        按 <kbd className="rounded dark:bg-white/10 dark:text-white/50 bg-gray-200 text-gray-500 px-1.5 py-0.5">/</kbd> 快速搜索
       </p>
     </div>
   )

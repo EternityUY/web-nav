@@ -35,10 +35,10 @@ export default function CategoryEditor({ data, onChange }: CategoryEditorProps) 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-white/70">分类列表</h3>
+        <h3 className="text-sm font-medium dark:text-white/70 text-gray-700">分类列表</h3>
         <button
           onClick={addCategory}
-          className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+          className="flex items-center gap-1 text-xs dark:text-blue-400 dark:hover:text-blue-300 text-blue-600 hover:text-blue-500 transition-colors"
         >
           <Plus size={14} />
           添加分类
@@ -46,13 +46,13 @@ export default function CategoryEditor({ data, onChange }: CategoryEditorProps) 
       </div>
 
       {data.categories.map((cat, i) => (
-        <div key={i} className="rounded-lg bg-white/[0.06] border border-white/[0.08] p-3">
+        <div key={i} className="rounded-lg dark:bg-white/[0.06] dark:border-white/[0.08] bg-gray-50 border border-gray-200 p-3">
           <div className="flex items-center gap-2 mb-2">
             {/* Icon picker */}
             <select
               value={cat.icon}
               onChange={(e) => updateCategory(i, 'icon', e.target.value)}
-              className="bg-white/10 text-white/80 text-xs rounded-lg px-2 py-1 border border-white/10 outline-none focus:border-white/30"
+              className="dark:bg-white/10 dark:text-white/80 dark:border-white/10 bg-gray-100 text-gray-700 border border-gray-200 text-xs rounded-lg px-2 py-1 outline-none focus:border-gray-400 dark:focus:border-white/30 transition-colors"
             >
               {ICON_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -66,7 +66,7 @@ export default function CategoryEditor({ data, onChange }: CategoryEditorProps) 
               type="text"
               value={cat.name}
               onChange={(e) => updateCategory(i, 'name', e.target.value)}
-              className="flex-1 bg-transparent text-sm text-white/90 outline-none border-b border-transparent focus:border-white/30 transition-colors"
+              className="flex-1 bg-transparent text-sm dark:text-white/90 text-gray-800 outline-none border-b border-transparent dark:focus:border-white/30 focus:border-gray-400 transition-colors"
               placeholder="分类名称"
             />
 
@@ -81,7 +81,7 @@ export default function CategoryEditor({ data, onChange }: CategoryEditorProps) 
 
           {/* Links in this category */}
           {cat.links.length > 0 && (
-            <div className="text-xs text-white/30 ml-1">
+            <div className="text-xs dark:text-white/30 text-gray-400 ml-1">
               {cat.links.length} 个链接
             </div>
           )}

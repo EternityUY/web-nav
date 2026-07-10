@@ -5,10 +5,10 @@ export default function Clock() {
 
   return (
     <div className="text-center select-none">
-      <div className="text-7xl font-thin text-white/90 tracking-wider">
+      <div className="text-6xl font-medium dark:text-white/90 text-gray-800 tracking-wider">
         {hours}:{minutes}
       </div>
-      <div className="text-lg text-white/60 mt-2 font-light">
+      <div className="text-lg dark:text-white/60 text-gray-500 mt-2 font-light">
         {dateStr} {dayStr}
       </div>
     </div>

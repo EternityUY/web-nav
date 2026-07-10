@@ -29,7 +29,7 @@ export default function Weather() {
 
   if (loading && !weather) {
     return (
-      <div className="flex items-center gap-2 text-white/50 text-sm">
+      <div className="flex items-center gap-2 dark:text-white/50 text-gray-500 text-sm">
         <Loader2 size={14} className="animate-spin" />
         <span>加载天气...</span>
       </div>
@@ -41,10 +41,10 @@ export default function Weather() {
   if (!weather) return null
 
   return (
-    <div className="flex items-center gap-2 text-white/80 text-sm">
+    <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
       <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
       <span className="font-medium">{Math.round(weather.temperature)}°C</span>
-      <MapPin size={12} className="text-white/40" />
+      <MapPin size={12} className="dark:text-white/40 text-gray-400" />
     </div>
   )
 }

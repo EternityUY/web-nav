@@ -12,7 +12,7 @@ export default function LinkCard({ link }: LinkCardProps) {
       href={link.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex items-center gap-3 rounded-xl bg-white/[0.06] border border-white/[0.08] px-4 py-3 transition-all duration-200 hover:bg-white/[0.12] hover:border-white/[0.15] hover:scale-[1.02]"
+      className="group relative flex items-center gap-3 rounded-xl dark:bg-white/[0.06] dark:border-white/[0.08] dark:hover:bg-white/[0.12] dark:hover:border-white/[0.15] glass-card px-4 py-3 transition-all duration-200 hover:bg-white/80 hover:border-gray-300 hover:scale-[1.02]"
     >
       {/* Pin badge */}
       {link.pinned && (
@@ -20,24 +20,24 @@ export default function LinkCard({ link }: LinkCardProps) {
       )}
 
       {/* Icon */}
-      <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-white/10 text-white/70 group-hover:bg-white/15 group-hover:text-white/90 transition-all">
+      <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg dark:bg-white/10 dark:text-white/70 dark:group-hover:bg-white/15 dark:group-hover:text-white/90 bg-gray-100 text-gray-600 group-hover:bg-gray-200 group-hover:text-gray-800 transition-all">
         {getIcon(link.icon, 18)}
       </span>
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <div className="text-sm font-medium text-white/90 truncate group-hover:text-white transition-colors">
+        <div className="text-sm font-medium dark:text-white/90 dark:group-hover:text-white text-gray-800 group-hover:text-gray-900 truncate transition-colors">
           {link.name}
         </div>
         {link.description && (
-          <div className="text-xs text-white/40 truncate mt-0.5">
+          <div className="text-xs dark:text-white/40 text-gray-500 truncate mt-0.5">
             {link.description}
           </div>
         )}
       </div>
 
       {/* External link indicator */}
-      <ExternalLink size={12} className="flex-shrink-0 text-white/20 group-hover:text-white/50 transition-colors" />
+      <ExternalLink size={12} className="flex-shrink-0 dark:text-white/20 dark:group-hover:text-white/50 text-gray-300 group-hover:text-gray-500 transition-colors" />
     </a>
   )
 }

@@ -1,19 +1,36 @@
 import { useNavStore } from '../stores/useNavStore'
 import { Sun, Moon } from 'lucide-react'
+import LiquidGlass from '@skyline23/liquid-glass-react'
 
 export default function Settings() {
   const { darkMode, toggleDarkMode } = useNavStore()
 
   return (
     <div className="flex items-center gap-3">
-      {/* Theme toggle */}
-      <button
+      {/* Theme toggle — Liquid Glass pilot */}
+      <LiquidGlass
+        cornerRadius={100}
+        displacementScale={60}
+        blurAmount={0.08}
+        saturation={130}
+        aberrationIntensity={2}
+        elasticity={0.25}
+        padding="9px"
+        overLight={!darkMode}
         onClick={toggleDarkMode}
-        className="rounded-full dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20 dark:hover:text-white/90 bg-white/70 text-gray-500 border border-gray-200/50 p-2 backdrop-blur-sm transition-all hover:bg-gray-100 hover:text-gray-800"
-        title={darkMode ? '切换亮色模式' : '切换暗色模式'}
+        style={{ display: 'inline-flex', cursor: 'pointer' }}
       >
-        {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-      </button>
+        <span
+          className="flex items-center justify-center"
+          title={darkMode ? '切换亮色模式' : '切换暗色模式'}
+        >
+          {darkMode ? (
+            <Sun size={18} color="rgba(255,255,255,0.75)" />
+          ) : (
+            <Moon size={18} color="rgba(80,80,80,0.8)" />
+          )}
+        </span>
+      </LiquidGlass>
     </div>
   )
 }

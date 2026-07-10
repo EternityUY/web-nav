@@ -7,7 +7,7 @@ import { getSearchUrl } from '../utils/search'
 const ENGINES = Object.entries(SEARCH_ENGINES)
 
 export default function SearchBar() {
-  const { searchEngine, setSearchEngine } = useNavStore()
+  const { searchEngine, setSearchEngine, darkMode } = useNavStore()
   const [query, setQuery] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -15,6 +15,12 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.bing
+
+  const glassStyles = JSON.stringify({
+    style: { roundness: 100, padding_x: 0, padding_y: 0 },
+    text: { content: '', edit: false, font_family: 'system-ui', size_weight: 400, font_size: 3.5 },
+    color: { accent: darkMode ? '#3B82F6' : '#2563EB' },
+  })
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -59,6 +65,20 @@ export default function SearchBar() {
             }
           `}
         >
+          {/* Liquid Glass overlay — distorts background behind the search bar */}
+          <sv-liquid-glass
+            styles={glassStyles}
+            contrast={darkMode ? 'dark' : 'light'}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 0,
+              borderRadius: '9999px',
+              overflow: 'hidden',
+            }}
+          />
+
+          <div className="relative z-10 flex items-center w-full">
           {/* Search engine switcher */}
           <div className="relative" ref={menuRef}>
             <button
@@ -114,6 +134,7 @@ export default function SearchBar() {
           >
             <Search size={20} />
           </button>
+          </div>
         </div>
       </form>
 

@@ -7,7 +7,7 @@ import { getSearchUrl } from '../utils/search'
 const ENGINES = Object.entries(SEARCH_ENGINES)
 
 export default function SearchBar() {
-  const { searchEngine, setSearchEngine, darkMode } = useNavStore()
+  const { searchEngine, setSearchEngine } = useNavStore()
   const [query, setQuery] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -15,12 +15,6 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.bing
-
-  const glassStyles = JSON.stringify({
-    style: { roundness: 100, padding_x: 0, padding_y: 0 },
-    text: { content: '', edit: false, font_family: 'system-ui', size_weight: 400, font_size: 3.5 },
-    color: { accent: darkMode ? '#3B82F6' : '#2563EB' },
-  })
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -53,30 +47,28 @@ export default function SearchBar() {
 
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
+      {/* Inline SVG filter for liquid glass displacement */}
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <defs>
+          <filter id="liquid-glass-filter" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+            <feDisplacementMap scale="50" in="SourceGraphic" in2="SourceGraphic" />
+          </filter>
+        </defs>
+      </svg>
+
       <form onSubmit={handleSubmit}>
         <div
           className={`
-            relative flex items-center rounded-full border transition-all duration-300
-            dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15
-            border-gray-200 glass-input hover:bg-white/70
-            ${focused
-              ? 'dark:border-white/40 dark:bg-white/15 dark:shadow-lg dark:shadow-black/20 border-gray-300 bg-white/85 shadow-lg shadow-gray-200/50 scale-105'
-              : ''
-            }
+            relative flex items-center rounded-full overflow-hidden
+            transition-all duration-300
+            ${focused ? 'scale-105' : ''}
           `}
         >
-          {/* Liquid Glass overlay — distorts background behind the search bar */}
-          <sv-liquid-glass
-            styles={glassStyles}
-            contrast={darkMode ? 'dark' : 'light'}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              zIndex: 0,
-              borderRadius: '9999px',
-              overflow: 'hidden',
-            }}
-          />
+          {/* Liquid Glass layers — pure CSS + SVG filter, no external dependency */}
+          <div className="liquid-glass-outer" />
+          <div className="liquid-glass-cover" />
+          <div className="liquid-glass-sharp" />
+          <div className="liquid-glass-reflect" />
 
           <div className="relative z-10 flex items-center w-full">
           {/* Search engine switcher */}

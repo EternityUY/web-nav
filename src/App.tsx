@@ -37,19 +37,21 @@ export default function App() {
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <LiquidGlass
-              {...glassPreset}
-              overLight={!darkMode}
-              padding="0"
-              onClick={() => setEditing(true)}
-            >
-              <button
-                className="rounded-full dark:text-white/60 dark:hover:text-white/90 text-gray-600 hover:text-gray-800 p-2 transition-all block"
-                title="编辑导航"
+            <div>
+              <LiquidGlass
+                {...glassPreset}
+                overLight={!darkMode}
+                padding="0"
+                onClick={() => setEditing(true)}
               >
-                <Edit3 size={16} />
-              </button>
-            </LiquidGlass>
+                <button
+                  className="rounded-full dark:text-white/60 dark:hover:text-white/90 text-gray-600 hover:text-gray-800 p-2 transition-all block"
+                  title="编辑导航"
+                >
+                  <Edit3 size={16} />
+                </button>
+              </LiquidGlass>
+            </div>
           </div>
         </div>
 

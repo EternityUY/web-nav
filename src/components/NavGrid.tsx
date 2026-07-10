@@ -61,7 +61,8 @@ export default function NavGrid() {
       {/* Local filter bar */}
       <div className="relative mb-6">
         <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/30 text-gray-400 z-10" />
-        <LiquidGlass {...glassPreset} overLight={!darkMode} className="glass-card" padding="0">
+        <div>
+        <LiquidGlass {...glassPreset} overLight={!darkMode} className="glass-card w-full" padding="0">
           <input
             type="text"
             value={searchQuery}
@@ -70,6 +71,7 @@ export default function NavGrid() {
             className="w-full bg-transparent dark:text-white/80 dark:placeholder-white/30 text-gray-700 placeholder-gray-400 outline-none rounded-lg pl-9 pr-3 py-2 text-sm"
           />
         </LiquidGlass>
+        </div>
       </div>
 
       {/* Categories */}

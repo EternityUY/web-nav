@@ -80,6 +80,28 @@ html {
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
+/* ========== LiquidGlass Component Normalizer ========== */
+/*
+ * liquid-glass-react 内部硬编码了 inline style:
+ * - .glass div: display: inline-flex; gap: 24px;
+ * - 内容包裹 div: font: 500 20px/1 system-ui; textShadow: ...
+ * 以下规则用 !important 覆盖它们，恢复正常的布局和文字样式。
+ */
+
+/* 覆盖 .glass 的 inline-flex → block，消除 gap */
+.glass {
+  display: block !important;
+  gap: normal !important;
+}
+
+/* 覆盖内容包裹层的强制字体和文字阴影 */
+.glass > div {
+  font: inherit !important;
+  text-shadow: none !important;
+}
+
+/* ========== iOS 26 Liquid Glass Fallback ========== */
+
 /* Dropdown-level glass — search engine menu, editor panel */
 .glass-dropdown {
   background: rgba(255, 255, 255, 0.78);

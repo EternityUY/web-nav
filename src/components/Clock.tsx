@@ -9,6 +9,7 @@ export default function Clock() {
   const glassPreset = getGlassPreset('clock', darkMode)
 
   return (
+    <div>
     <LiquidGlass {...glassPreset} overLight={!darkMode} padding="24px 48px">
       <div className="text-center select-none">
         <div className="text-6xl font-medium dark:text-white/90 text-gray-800 tracking-wider">
@@ -19,5 +20,6 @@ export default function Clock() {
         </div>
       </div>
     </LiquidGlass>
+    </div>
   )
 }

@@ -78,7 +78,8 @@ export default function EditorPanel() {
       />
 
       {/* Panel */}
-      <LiquidGlass {...glassPreset} overLight={!darkMode} className="relative ml-auto w-full max-w-lg h-full glass-dropdown shadow-2xl flex flex-col" padding="0">
+      <div className="relative ml-auto w-full max-w-lg h-full shadow-2xl">
+      <LiquidGlass {...glassPreset} overLight={!darkMode} className="glass-dropdown w-full h-full flex flex-col" padding="0">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b dark:border-white/10 border-gray-200">
           <h2 className="text-base font-semibold dark:text-white/90 text-gray-800">编辑导航</h2>
@@ -173,6 +174,7 @@ export default function EditorPanel() {
           </button>
         </div>
       </LiquidGlass>
+      </div>
     </div>
   )
 }

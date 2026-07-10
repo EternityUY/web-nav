@@ -10,6 +10,7 @@ export default function Settings() {
   return (
     <div className="flex items-center gap-3">
       {/* Theme toggle */}
+      <div>
       <LiquidGlass
         {...glassPreset}
         overLight={!darkMode}
@@ -23,6 +24,7 @@ export default function Settings() {
           {darkMode ? <Sun size={16} /> : <Moon size={16} />}
         </button>
       </LiquidGlass>
+      </div>
     </div>
   )
 }

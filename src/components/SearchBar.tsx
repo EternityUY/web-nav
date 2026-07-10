@@ -51,10 +51,11 @@ export default function SearchBar() {
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <form onSubmit={handleSubmit}>
+        <div className="w-full">
         <LiquidGlass
           {...glassPreset}
           overLight={!darkMode}
-          className={`transition-all duration-300 ${
+          className={`w-full transition-all duration-300 ${
             focused ? 'scale-105' : ''
           }`}
           padding="0"
@@ -125,6 +126,7 @@ export default function SearchBar() {
           </button>
           </div>
         </LiquidGlass>
+        </div>
       </form>
 
       {/* Search engine hint */}

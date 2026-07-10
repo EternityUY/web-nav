@@ -20,6 +20,7 @@ export default function LinkCard({ link }: LinkCardProps) {
       rel="noopener noreferrer"
       className="group block transition-all duration-200 hover:scale-[1.02]"
     >
+      <div>
       <LiquidGlass
         {...glassPreset}
         overLight={!darkMode}
@@ -53,6 +54,7 @@ export default function LinkCard({ link }: LinkCardProps) {
           <ExternalLink size={12} className="flex-shrink-0 dark:text-white/20 dark:group-hover:text-white/50 text-gray-300 group-hover:text-gray-500 transition-colors" />
         </span>
       </LiquidGlass>
+      </div>
     </a>
   )
 }

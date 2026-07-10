@@ -44,6 +44,7 @@ export default function Weather() {
   if (!weather) return null
 
   return (
+    <div>
     <LiquidGlass {...glassPreset} overLight={!darkMode} padding="6px 14px">
       <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
         <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
@@ -51,5 +52,6 @@ export default function Weather() {
         <MapPin size={12} className="dark:text-white/40 text-gray-400" />
       </div>
     </LiquidGlass>
+    </div>
   )
 }

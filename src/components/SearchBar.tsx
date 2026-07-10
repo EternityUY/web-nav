@@ -3,13 +3,11 @@ import { Search, ChevronDown } from 'lucide-react'
 import { SEARCH_ENGINES } from '../utils/search'
 import { useNavStore } from '../stores/useNavStore'
 import { getSearchUrl } from '../utils/search'
-import { Vaso } from 'vaso'
-import { getGlassPreset } from '../utils/glassPresets'
 
 const ENGINES = Object.entries(SEARCH_ENGINES)
 
 export default function SearchBar() {
-  const { searchEngine, setSearchEngine, darkMode } = useNavStore()
+  const { searchEngine, setSearchEngine } = useNavStore()
   const [query, setQuery] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -17,7 +15,6 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.bing
-  const preset = getGlassPreset('input', darkMode)
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -51,8 +48,7 @@ export default function SearchBar() {
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <form onSubmit={handleSubmit}>
-        <Vaso
-          {...preset}
+        <div
           className={`
             relative flex items-center rounded-full border transition-all duration-300
             dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15
@@ -118,7 +114,7 @@ export default function SearchBar() {
           >
             <Search size={20} />
           </button>
-        </Vaso>
+        </div>
       </form>
 
       {/* Search engine hint */}

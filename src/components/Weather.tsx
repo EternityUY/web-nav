@@ -2,22 +2,21 @@ import { useEffect } from 'react'
 import { useWeather, getWeatherEmoji } from '../hooks/useWeather'
 import { useNavStore } from '../stores/useNavStore'
 import { MapPin, Loader2 } from 'lucide-react'
-import { Vaso } from 'vaso'
-import { getGlassPreset } from '../utils/glassPresets'
 
 export default function Weather() {
-  const { latitude, longitude, setLocation, darkMode } = useNavStore()
+  const { latitude, longitude, setLocation } = useNavStore()
   const { weather, loading, error } = useWeather(latitude, longitude)
-  const preset = getGlassPreset('card', darkMode)
 
   useEffect(() => {
     if (latitude === null && longitude === null) {
+      // Try to get user location
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             setLocation(pos.coords.latitude, pos.coords.longitude)
           },
           () => {
+            // Fallback to Beijing coordinates
             setLocation(39.9042, 116.4074)
           },
           { timeout: 5000 },
@@ -38,15 +37,14 @@ export default function Weather() {
   }
 
   if (error && !weather) return null
+
   if (!weather) return null
 
   return (
-    <Vaso {...preset}>
-      <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
-        <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
-        <span className="font-medium">{Math.round(weather.temperature)}°C</span>
-        <MapPin size={12} className="dark:text-white/40 text-gray-400" />
-      </div>
-    </Vaso>
+    <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
+      <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
+      <span className="font-medium">{Math.round(weather.temperature)}°C</span>
+      <MapPin size={12} className="dark:text-white/40 text-gray-400" />
+    </div>
   )
 }

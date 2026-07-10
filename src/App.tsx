@@ -8,34 +8,38 @@ import NavGrid from './components/NavGrid'
 import Settings from './components/Settings'
 import EditorPanel from './components/Editor/EditorPanel'
 import { Edit3 } from 'lucide-react'
-import { Vaso } from 'vaso'
-import { getGlassPreset } from './utils/glassPresets'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
-  const preset = getGlassPreset('button', darkMode)
 
   useEffect(() => {
     fetchNav()
   }, [fetchNav])
 
+  // Apply dark mode class to html
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
   }, [darkMode])
 
   return (
     <div className="relative h-full w-full overflow-y-auto">
+      {/* Background layer */}
       <Background />
 
+      {/* Main content */}
       <div className="relative z-10 flex flex-col items-center min-h-full">
         {/* Top bar: Weather + Settings */}
         <div className="w-full flex items-center justify-between px-6 pt-4 pb-8">
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <Vaso {...preset} onClick={() => setEditing(true)} className="cursor-pointer">
-              <Edit3 size={16} className={darkMode ? 'text-white/80' : 'text-gray-600'} />
-            </Vaso>
+            <button
+              onClick={() => setEditing(true)}
+              className="rounded-full dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20 dark:hover:text-white/90 bg-white/70 text-gray-600 border border-gray-200/50 p-2 backdrop-blur-sm transition-all hover:bg-gray-100 hover:text-gray-800"
+              title="编辑导航"
+            >
+              <Edit3 size={16} />
+            </button>
           </div>
         </div>
 
@@ -55,6 +59,7 @@ export default function App() {
         </div>
       </div>
 
+      {/* Editor overlay */}
       {editing && <EditorPanel />}
     </div>
   )

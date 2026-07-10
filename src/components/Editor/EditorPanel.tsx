@@ -4,12 +4,9 @@ import CategoryEditor from './CategoryEditor'
 import LinkEditor from './LinkEditor'
 import type { NavData } from '../../types'
 import { X, Save, Undo2, FileDown, FileUp, AlertCircle, CheckCircle2 } from 'lucide-react'
-import { Vaso } from 'vaso'
-import { getGlassPreset } from '../../utils/glassPresets'
 
 export default function EditorPanel() {
-  const { navData, setEditing, saveNav, darkMode } = useNavStore()
-  const preset = getGlassPreset('panel', darkMode)
+  const { navData, setEditing, saveNav } = useNavStore()
   const [draft, setDraft] = useState<NavData>(() =>
     navData ? JSON.parse(JSON.stringify(navData)) : { categories: [] },
   )
@@ -78,7 +75,7 @@ export default function EditorPanel() {
       />
 
       {/* Panel */}
-      <Vaso {...preset} className="relative ml-auto w-full max-w-lg h-full dark:bg-zinc-900/95 dark:border-white/10 bg-white/90 border-l border-gray-200 glass-dropdown shadow-2xl flex flex-col">
+      <div className="relative ml-auto w-full max-w-lg h-full dark:bg-zinc-900/95 dark:border-white/10 bg-white/90 border-l border-gray-200 glass-dropdown shadow-2xl flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b dark:border-white/10 border-gray-200">
           <h2 className="text-base font-semibold dark:text-white/90 text-gray-800">编辑导航</h2>
@@ -172,7 +169,7 @@ export default function EditorPanel() {
             {saving ? '保存中...' : '保存'}
           </button>
         </div>
-      </Vaso>
+      </div>
     </div>
   )
 }

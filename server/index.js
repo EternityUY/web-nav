@@ -131,7 +131,7 @@ app.get('/api/background/image', async (req, res) => {
 
 if (isProd) {
   app.use(express.static(DIST_DIR))
-  app.get('*', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(DIST_DIR, 'index.html'))
   })
 }

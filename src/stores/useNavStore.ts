@@ -16,6 +16,7 @@ interface NavStore {
   // Weather
   latitude: number | null
   longitude: number | null
+  locationName: string | null
 
   // Actions
   fetchNav: () => Promise<void>
@@ -24,7 +25,7 @@ interface NavStore {
   toggleDarkMode: () => void
   setSearchEngine: (engine: string) => void
   setSearchQuery: (query: string) => void
-  setLocation: (lat: number, lng: number) => void
+  setLocation: (lat: number, lng: number, name?: string) => void
 }
 
 export const useNavStore = create<NavStore>((set, get) => ({
@@ -37,6 +38,7 @@ export const useNavStore = create<NavStore>((set, get) => ({
   searchQuery: '',
   latitude: null,
   longitude: null,
+  locationName: null,
 
   fetchNav: async () => {
     set({ loading: true, error: null })
@@ -75,5 +77,10 @@ export const useNavStore = create<NavStore>((set, get) => ({
   toggleDarkMode: () => set((s) => ({ darkMode: !s.darkMode })),
   setSearchEngine: (engine) => set({ searchEngine: engine }),
   setSearchQuery: (query) => set({ searchQuery: query }),
-  setLocation: (lat, lng) => set({ latitude: lat, longitude: lng }),
+  setLocation: (lat, lng, name) =>
+    set({
+      latitude: lat,
+      longitude: lng,
+      ...(name !== undefined ? { locationName: name } : {}),
+    }),
 }))

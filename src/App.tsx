@@ -8,6 +8,7 @@ import NavGrid from './components/NavGrid'
 import Settings from './components/Settings'
 import EditorPanel from './components/Editor/EditorPanel'
 import { Edit3 } from 'lucide-react'
+import LiquidGlass from '@skyline23/liquid-glass-react'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
@@ -33,13 +34,22 @@ export default function App() {
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <button
+            <LiquidGlass
+              cornerRadius={100}
+              displacementScale={60}
+              blurAmount={0.08}
+              saturation={130}
+              aberrationIntensity={2}
+              elasticity={0.25}
+              padding="8px"
+              overLight={!darkMode}
               onClick={() => setEditing(true)}
-              className="rounded-full dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20 dark:hover:text-white/90 bg-white/70 text-gray-600 border border-gray-200/50 p-2 backdrop-blur-sm transition-all hover:bg-gray-100 hover:text-gray-800"
-              title="编辑导航"
+              style={{ display: 'inline-flex', cursor: 'pointer' }}
             >
-              <Edit3 size={16} />
-            </button>
+              <span className="flex items-center justify-center" title="编辑导航">
+                <Edit3 size={16} color={darkMode ? 'rgba(255,255,255,0.65)' : 'rgba(80,80,80,0.7)'} />
+              </span>
+            </LiquidGlass>
           </div>
         </div>
 

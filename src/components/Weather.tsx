@@ -2,10 +2,13 @@ import { useEffect } from 'react'
 import { useWeather, getWeatherEmoji } from '../hooks/useWeather'
 import { useNavStore } from '../stores/useNavStore'
 import { MapPin, Loader2 } from 'lucide-react'
+import LiquidGlass from 'liquid-glass-react'
+import { getGlassPreset } from '../utils/glassPresets'
 
 export default function Weather() {
-  const { latitude, longitude, setLocation } = useNavStore()
+  const { latitude, longitude, setLocation, darkMode } = useNavStore()
   const { weather, loading, error } = useWeather(latitude, longitude)
+  const glassPreset = getGlassPreset('card', darkMode)
 
   useEffect(() => {
     if (latitude === null && longitude === null) {
@@ -41,10 +44,12 @@ export default function Weather() {
   if (!weather) return null
 
   return (
-    <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
-      <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
-      <span className="font-medium">{Math.round(weather.temperature)}°C</span>
-      <MapPin size={12} className="dark:text-white/40 text-gray-400" />
-    </div>
+    <LiquidGlass {...glassPreset} overLight={!darkMode} padding="6px 14px">
+      <div className="flex items-center gap-2 dark:text-white/80 text-gray-600 text-sm">
+        <span className="text-xl">{getWeatherEmoji(weather.weatherCode)}</span>
+        <span className="font-medium">{Math.round(weather.temperature)}°C</span>
+        <MapPin size={12} className="dark:text-white/40 text-gray-400" />
+      </div>
+    </LiquidGlass>
   )
 }

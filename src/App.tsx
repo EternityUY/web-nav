@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavStore } from './stores/useNavStore'
 import Background from './components/Background'
 import SearchBar from './components/SearchBar'
@@ -8,9 +8,13 @@ import NavGrid from './components/NavGrid'
 import Settings from './components/Settings'
 import EditorPanel from './components/Editor/EditorPanel'
 import { Edit3 } from 'lucide-react'
+import LiquidGlass from 'liquid-glass-react'
+import { getGlassPreset } from './utils/glassPresets'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
+  const rootRef = useRef<HTMLDivElement>(null)
+  const glassPreset = getGlassPreset('button', darkMode)
 
   useEffect(() => {
     fetchNav()
@@ -22,7 +26,7 @@ export default function App() {
   }, [darkMode])
 
   return (
-    <div className="relative h-full w-full overflow-y-auto">
+    <div ref={rootRef} className="relative h-full w-full overflow-y-auto">
       {/* Background layer */}
       <Background />
 
@@ -33,13 +37,19 @@ export default function App() {
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <button
+            <LiquidGlass
+              {...glassPreset}
+              overLight={!darkMode}
+              padding="0"
               onClick={() => setEditing(true)}
-              className="rounded-full dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20 dark:hover:text-white/90 bg-white/70 text-gray-600 border border-gray-200/50 p-2 backdrop-blur-sm transition-all hover:bg-gray-100 hover:text-gray-800"
-              title="编辑导航"
             >
-              <Edit3 size={16} />
-            </button>
+              <button
+                className="rounded-full dark:text-white/60 dark:hover:text-white/90 text-gray-600 hover:text-gray-800 p-2 transition-all block"
+                title="编辑导航"
+              >
+                <Edit3 size={16} />
+              </button>
+            </LiquidGlass>
           </div>
         </div>
 

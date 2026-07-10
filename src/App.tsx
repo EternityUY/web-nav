@@ -8,12 +8,12 @@ import NavGrid from './components/NavGrid'
 import Settings from './components/Settings'
 import EditorPanel from './components/Editor/EditorPanel'
 import { Edit3 } from 'lucide-react'
-import LiquidGlass from 'liquid-glass-react'
+import { Vaso } from 'vaso'
 import { getGlassPreset } from './utils/glassPresets'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
-  const glassPreset = getGlassPreset('button', darkMode)
+  const preset = getGlassPreset('button', darkMode)
 
   useEffect(() => {
     fetchNav()
@@ -33,16 +33,9 @@ export default function App() {
           <Weather />
           <div className="flex items-center gap-2">
             <Settings />
-            <div>
-              <LiquidGlass
-                {...glassPreset}
-                overLight={!darkMode}
-                padding="8px"
-                onClick={() => setEditing(true)}
-              >
-                <Edit3 size={16} className={darkMode ? 'text-white/80' : 'text-gray-600'} />
-              </LiquidGlass>
-            </div>
+            <Vaso {...preset} onClick={() => setEditing(true)} className="cursor-pointer">
+              <Edit3 size={16} className={darkMode ? 'text-white/80' : 'text-gray-600'} />
+            </Vaso>
           </div>
         </div>
 

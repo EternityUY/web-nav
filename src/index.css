@@ -41,26 +41,12 @@ html {
   border-radius: 3px;
 }
 
-/* ========== LiquidGlass Component Fixes ========== */
+/* ========== iOS 26 Liquid Glass System ========== */
 /*
- * liquid-glass-react 内层 div 有硬编码 inline style:
- * - display: inline-flex; gap: 24px;
- * - font: 500 20px/1 system-ui; textShadow
- * 以下 !important 覆盖使其不破坏布局和文字样式。
- */
-.glass {
-  display: block !important;
-  gap: normal !important;
-}
-.glass > div {
-  font: inherit !important;
-  text-shadow: none !important;
-}
-
-/* ========== iOS 26 Liquid Glass System (CSS Fallback) ========== */
-/*
- * 用于 SearchBar / LinkCard / NavGrid / EditorPanel 等复杂组件。
- * LiquidGlass 只用于 Clock / Weather / 按钮等简单元素。
+ * Vaso (shuding/liquid-glass) 提供 SVG feDisplacementMap 背景扭曲效果。
+ * 以下 CSS 类作为基础玻璃样式，与 Vaso 叠加使用：
+ * - Vaso 负责位移扭曲 + backdrop-filter
+ * - CSS 类负责背景色 + 边框 + 阴影
  */
 
 /* Card-level glass — LinkCard, NavGrid filter bar */

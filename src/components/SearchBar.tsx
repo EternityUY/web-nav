@@ -72,7 +72,7 @@ export default function SearchBar() {
             elasticity={0.18}
             padding="0"
             overLight={!darkMode}
-            style={{ width: '100%', display: 'block' }}
+            style={{ width: '100%' }}
           >
             <div className="flex items-center w-full">
               {/* Search engine switcher button */}

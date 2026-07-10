@@ -1,22 +1,18 @@
-FROM node:20-alpine AS runner
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Upgrade npm to avoid npm 10.8.2 bug
-RUN npm install -g npm@latest
+# 只安装服务端运行时必需的包（express + js-yaml），前端依赖已打包进 dist/
+RUN npm install express js-yaml
 
-# Copy production dependencies only
-COPY package.json package-lock.json* ./
-RUN npm install --omit=dev
-
-# Copy all source files (dist/ already built locally and committed)
+# 复制构建产物和服务端代码
+COPY dist/ dist/
 COPY server/ server/
 COPY data/ data/
 COPY config/ config/
-COPY dist/ dist/
 
-# Data directory for YAML persistence
-RUN mkdir -p data && chown -R node:node /app
+# 确保 data 目录对 node 用户可写（供 PUT /api/nav 写入 YAML）
+RUN chown -R node:node /app
 
 USER node
 

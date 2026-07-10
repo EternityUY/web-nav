@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useNavStore } from './stores/useNavStore'
 import Background from './components/Background'
 import SearchBar from './components/SearchBar'
@@ -13,24 +13,20 @@ import { getGlassPreset } from './utils/glassPresets'
 
 export default function App() {
   const { fetchNav, editing, setEditing, darkMode } = useNavStore()
-  const rootRef = useRef<HTMLDivElement>(null)
   const glassPreset = getGlassPreset('button', darkMode)
 
   useEffect(() => {
     fetchNav()
   }, [fetchNav])
 
-  // Apply dark mode class to html
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode)
   }, [darkMode])
 
   return (
-    <div ref={rootRef} className="relative h-full w-full overflow-y-auto">
-      {/* Background layer */}
+    <div className="relative h-full w-full overflow-y-auto">
       <Background />
 
-      {/* Main content */}
       <div className="relative z-10 flex flex-col items-center min-h-full">
         {/* Top bar: Weather + Settings */}
         <div className="w-full flex items-center justify-between px-6 pt-4 pb-8">
@@ -41,15 +37,10 @@ export default function App() {
               <LiquidGlass
                 {...glassPreset}
                 overLight={!darkMode}
-                padding="0"
+                padding="8px"
                 onClick={() => setEditing(true)}
               >
-                <button
-                  className="rounded-full dark:text-white/60 dark:hover:text-white/90 text-gray-600 hover:text-gray-800 p-2 transition-all block"
-                  title="编辑导航"
-                >
-                  <Edit3 size={16} />
-                </button>
+                <Edit3 size={16} className={darkMode ? 'text-white/80' : 'text-gray-600'} />
               </LiquidGlass>
             </div>
           </div>
@@ -71,7 +62,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Editor overlay */}
       {editing && <EditorPanel />}
     </div>
   )

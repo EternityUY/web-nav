@@ -9,21 +9,18 @@ export default function Settings() {
 
   return (
     <div className="flex items-center gap-3">
-      {/* Theme toggle */}
       <div>
-      <LiquidGlass
-        {...glassPreset}
-        overLight={!darkMode}
-        padding="0"
-        onClick={toggleDarkMode}
-      >
-        <button
-          className="rounded-full dark:text-white/60 dark:hover:text-white/90 text-gray-500 hover:text-gray-800 p-2 transition-all block"
-          title={darkMode ? '切换亮色模式' : '切换暗色模式'}
+        <LiquidGlass
+          {...glassPreset}
+          overLight={!darkMode}
+          padding="8px"
+          onClick={toggleDarkMode}
         >
-          {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-        </button>
-      </LiquidGlass>
+          {darkMode
+            ? <Sun size={16} className="text-white/80" />
+            : <Moon size={16} className="text-gray-600" />
+          }
+        </LiquidGlass>
       </div>
     </div>
   )

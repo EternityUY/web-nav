@@ -3,13 +3,11 @@ import { Search, ChevronDown } from 'lucide-react'
 import { SEARCH_ENGINES } from '../utils/search'
 import { useNavStore } from '../stores/useNavStore'
 import { getSearchUrl } from '../utils/search'
-import LiquidGlass from 'liquid-glass-react'
-import { getGlassPreset } from '../utils/glassPresets'
 
 const ENGINES = Object.entries(SEARCH_ENGINES)
 
 export default function SearchBar() {
-  const { searchEngine, setSearchEngine, darkMode } = useNavStore()
+  const { searchEngine, setSearchEngine } = useNavStore()
   const [query, setQuery] = useState('')
   const [showMenu, setShowMenu] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -17,7 +15,6 @@ export default function SearchBar() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const currentEngine = SEARCH_ENGINES[searchEngine] || SEARCH_ENGINES.bing
-  const glassPreset = getGlassPreset('prominent', darkMode)
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -51,24 +48,17 @@ export default function SearchBar() {
   return (
     <div className="w-full max-w-2xl mx-auto px-4">
       <form onSubmit={handleSubmit}>
-        <div className="w-full">
-        <LiquidGlass
-          {...glassPreset}
-          overLight={!darkMode}
-          className={`w-full transition-all duration-300 ${
-            focused ? 'scale-105' : ''
-          }`}
-          padding="0"
+        <div
+          className={`
+            relative flex items-center rounded-full border transition-all duration-300
+            dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15
+            border-gray-200 glass-input hover:bg-white/70
+            ${focused
+              ? 'dark:border-white/40 dark:bg-white/15 dark:shadow-lg dark:shadow-black/20 border-gray-300 bg-white/85 shadow-lg shadow-gray-200/50 scale-105'
+              : ''
+            }
+          `}
         >
-          <div
-            className={`
-              relative flex items-center rounded-full
-              ${focused
-                ? 'dark:shadow-lg dark:shadow-black/20 shadow-lg shadow-gray-200/50'
-                : ''
-              }
-            `}
-          >
           {/* Search engine switcher */}
           <div className="relative" ref={menuRef}>
             <button
@@ -124,8 +114,6 @@ export default function SearchBar() {
           >
             <Search size={20} />
           </button>
-          </div>
-        </LiquidGlass>
         </div>
       </form>
 

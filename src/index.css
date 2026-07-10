@@ -41,11 +41,26 @@ html {
   border-radius: 3px;
 }
 
-/* ========== iOS 26 Liquid Glass Fallback ========== */
+/* ========== LiquidGlass Component Fixes ========== */
 /*
- * 以下 CSS 类作为 Safari/Firefox 降级回退。
- * Chromium 浏览器中，backdrop-filter 由 liquid-glass-react 的 WebGL 接管；
- * 非 Chromium 浏览器无法使用 WebGL 位移，回退到纯 blur 玻璃效果。
+ * liquid-glass-react 内层 div 有硬编码 inline style:
+ * - display: inline-flex; gap: 24px;
+ * - font: 500 20px/1 system-ui; textShadow
+ * 以下 !important 覆盖使其不破坏布局和文字样式。
+ */
+.glass {
+  display: block !important;
+  gap: normal !important;
+}
+.glass > div {
+  font: inherit !important;
+  text-shadow: none !important;
+}
+
+/* ========== iOS 26 Liquid Glass System (CSS Fallback) ========== */
+/*
+ * 用于 SearchBar / LinkCard / NavGrid / EditorPanel 等复杂组件。
+ * LiquidGlass 只用于 Clock / Weather / 按钮等简单元素。
  */
 
 /* Card-level glass — LinkCard, NavGrid filter bar */
@@ -64,7 +79,7 @@ html {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* Input-level glass — SearchBar, buttons */
+/* Input-level glass — SearchBar */
 .glass-input {
   background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(20px) saturate(1.15);
@@ -79,28 +94,6 @@ html {
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-
-/* ========== LiquidGlass Component Normalizer ========== */
-/*
- * liquid-glass-react 内部硬编码了 inline style:
- * - .glass div: display: inline-flex; gap: 24px;
- * - 内容包裹 div: font: 500 20px/1 system-ui; textShadow: ...
- * 以下规则用 !important 覆盖它们，恢复正常的布局和文字样式。
- */
-
-/* 覆盖 .glass 的 inline-flex → block，消除 gap */
-.glass {
-  display: block !important;
-  gap: normal !important;
-}
-
-/* 覆盖内容包裹层的强制字体和文字阴影 */
-.glass > div {
-  font: inherit !important;
-  text-shadow: none !important;
-}
-
-/* ========== iOS 26 Liquid Glass Fallback ========== */
 
 /* Dropdown-level glass — search engine menu, editor panel */
 .glass-dropdown {

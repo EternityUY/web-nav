@@ -2,13 +2,10 @@ import { useState, useMemo } from 'react'
 import { useNavStore } from '../stores/useNavStore'
 import CategorySection from './CategorySection'
 import { Search, Loader2, AlertCircle } from 'lucide-react'
-import LiquidGlass from 'liquid-glass-react'
-import { getGlassPreset } from '../utils/glassPresets'
 
 export default function NavGrid() {
-  const { navData, loading, error, darkMode } = useNavStore()
+  const { navData, loading, error } = useNavStore()
   const [searchQuery, setSearchQuery] = useState('')
-  const glassPreset = getGlassPreset('input', darkMode)
 
   const hasLinks = useMemo(() => {
     if (!navData?.categories) return false
@@ -60,18 +57,14 @@ export default function NavGrid() {
     <div className="w-full max-w-4xl mx-auto px-4">
       {/* Local filter bar */}
       <div className="relative mb-6">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/30 text-gray-400 z-10" />
-        <div>
-        <LiquidGlass {...glassPreset} overLight={!darkMode} className="glass-card w-full" padding="0">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`在 ${totalLinks} 个链接中筛选...`}
-            className="w-full bg-transparent dark:text-white/80 dark:placeholder-white/30 text-gray-700 placeholder-gray-400 outline-none rounded-lg pl-9 pr-3 py-2 text-sm"
-          />
-        </LiquidGlass>
-        </div>
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 dark:text-white/30 text-gray-400" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={`在 ${totalLinks} 个链接中筛选...`}
+          className="w-full dark:bg-white/[0.06] dark:border-white/[0.08] dark:text-white/80 dark:placeholder-white/30 dark:focus:border-white/20 dark:focus:bg-white/[0.1] glass-card rounded-lg pl-9 pr-3 py-2 text-sm text-gray-700 placeholder-gray-400 outline-none transition-all focus:border-gray-300 focus:bg-white/80"
+        />
       </div>
 
       {/* Categories */}
